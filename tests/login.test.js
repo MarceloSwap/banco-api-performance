@@ -1,7 +1,9 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
+const postLogin = JSON.parse(open('../fixtures/postLogin.json'));
 
 export const options = {
+    
     stages: [
         { duration: '5s', target: 10 },
         { duration: '20s', target: 10 },
@@ -17,10 +19,10 @@ export const options = {
 export default function () {
     const url = 'http://localhost:3000/login';
 
-    const payload = JSON.stringify({
-        username: 'marcelo.ferreira',
-        senha: '123456'
-    });
+    postLogin.username = 'marcelo.souza' //manipulando dados da fixture
+
+    console.log(postLogin);
+    const payload = JSON.stringify(postLogin);
 
     const params = {
         headers: {
