@@ -6,7 +6,7 @@ export const options = {
     
     stages: [
         { duration: '5s', target: 10 },
-        { duration: '20s', target: 10 },
+        { duration: '5s', target: 10 },
         { duration: '5s', target: 0 },
     ],
 
@@ -19,9 +19,8 @@ export const options = {
 export default function () {
     const url = 'http://localhost:3000/login';
 
-    postLogin.username = 'marcelo.souza' //manipulando dados da fixture
+    //postLogin.username = 'marcelo.souza' //manipulando dados da fixture
 
-    console.log(postLogin);
     const payload = JSON.stringify(postLogin);
 
     const params = {
