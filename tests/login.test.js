@@ -1,22 +1,28 @@
 import http from 'k6/http';
-import { sleep, check } from 'k6';
+import { sleep, check } from 'k6'; 
+import { pegarBaseURL } from '../utils/variaveis.js';
+const postLogin = JSON.parse(open('../fixtures/postLogin.json'));
 
 export const options = {
-    iterations: 50,
+    
+    stages: [
+        { duration: '5s', target: 10 },
+        { duration: '20s', target: 10 },
+        { duration: '5s', target: 0 },
+    ],
 
     thresholds: {
-    http_req_failed: ['rate<0.01'], // erros HTTP devem ser inferiores a 1%
-    http_req_duration: ['p(90)<4.00', 'max<5.00'], // 90% das requisições e tempo máximo sendo 
-  },
+        http_req_failed: ['rate<0.01'], // erros HTTP devem ser inferiores a 1%
+        http_req_duration: ['p(90)<3000', 'max<5000'], // 90% das requisições e tempo máximo nao pode passar de 5000
+    },
 };
 
 export default function () {
-    const url = 'http://localhost:3000/login';
+    const url = pegarBaseURL() + '/login';
 
-    const payload = JSON.stringify({
-        username: 'marcelo.ferreira',
-        senha: '123456'
-    });
+    //postLogin.username = 'marcelo.souza' //manipulando dados da fixture
+
+    const payload = JSON.stringify(postLogin);
 
     const params = {
         headers: {
